@@ -1,0 +1,61 @@
+# Python Bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment directories
+venv/
+env/
+.venv/
+.env/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.db
+*.sqlite3
+db.sqlite3
+*.log
+local_settings.py
+staticfiles/
+media/
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Log files
+*.log
+
+# Coverage reports
+.coverage
+.coverage.*
+
+# Testing-related
+*.bak
+*.swp
+*.swo
+
+# Environment variables file
+.env
+
+# Docker-related files
+docker-compose.override.yml
+
+# Ignore files related to package managers
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore IDE-specific files (for example, JetBrains, etc.)
+.idea/
