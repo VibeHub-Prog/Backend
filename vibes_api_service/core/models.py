@@ -9,6 +9,7 @@ class Post(models.Model):
     media = models.ImageField(upload_to='post_images/', null=True, blank=True)  
     created_at = models.DateTimeField(auto_now_add=True)  
     updated_at = models.DateTimeField(auto_now=True)  
+    # comment = 
 
 class Vibe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
