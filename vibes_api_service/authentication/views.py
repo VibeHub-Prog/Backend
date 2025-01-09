@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-
+from django.db.models import Q
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
@@ -16,6 +16,7 @@ from drf_spectacular.utils import extend_schema
 from utils.security.oauth import GoogleOAuthService
 from utils.email import EmailContent, EmailManager, send_email
 
+from .models import CustomBaseUser
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -79,7 +80,7 @@ class UserViewSet(viewsets.ModelViewSet):
     A viewset for viewing and editing user instances.
     """
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = CustomBaseUser.objects.all()
     # permission_classes = [IsAuthenticated]  
 
 
@@ -101,9 +102,9 @@ class UserViewSet(viewsets.ModelViewSet):
                 Q(username=user_data["username"]) | Q(email=user_data["email"])
             ).first()
             # Check if user already exists and send invite message
-            if user:
-                resend_inivite_email_if_user_exists(user.username, user.email)
-                raise Exception("User already exists")
+            # if user:
+            #     resend_inivite_email_if_user_exists(user.username, user.email)
+            #     raise Exception("User already exists")
 
             serializer = self.serializer_class(data=user_data)
             if serializer.is_valid(raise_exception=True):
