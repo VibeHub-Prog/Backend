@@ -2,7 +2,7 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from authentication.models import Profile
+from authentication.models import CustomBaseUser
 
 class GoogleOAuthService:
     @staticmethod
@@ -27,7 +27,7 @@ class GoogleOAuthService:
         if not email:
             return None
 
-        user, created = Profile.objects.get_or_create(
+        user, created = CustomBaseUser.objects.get_or_create(
             email=email,
             defaults={
                 'username': email,
@@ -38,7 +38,7 @@ class GoogleOAuthService:
         )
 
         if created:
-            Profile.objects.create(
+            CustomBaseUser.objects.create(
                 user=user,
                 email_verified=token_data.get('email_verified', False),
                 avatar_url=token_data.get('picture'),
