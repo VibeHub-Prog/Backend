@@ -8,9 +8,8 @@ router.register("users", UserViewSet)  # Register the UserViewSet
 
 urlpatterns = [
     # Login URL using JWT token obtain view
-    path('api/login/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/login/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
+    path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("auth/password_reset/", include("django_rest_passwordreset.urls", namespace="password_reset")),
-    path('oauth/google/', google_oauth, name='google_oauth'),
+    path('auth/google/', google_oauth, name='google_oauth'),
 ] + router.urls

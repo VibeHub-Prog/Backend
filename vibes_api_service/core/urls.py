@@ -7,12 +7,12 @@ from .views import MessageViewSet, CommunityViewSet, MembershipViewSet, PostView
 
 
 router = DefaultRouter()
-router.register('messages', MessageViewSet, basename='messages')
+# router.register('messages', MessageViewSet, basename='messages')
 
 
 router.register('posts', PostViewSet, basename='posts')
-router.register('vibes', VibeViewSet, basename='vibes')
-router.register('bookmarks', BookmarkViewSet, basename='bookmarks')
+# router.register('vibes', VibeViewSet, basename='vibes')
+# router.register('bookmarks', BookmarkViewSet, basename='bookmarks')
 
 urlpatterns = [
     path('posts/', PostsListCreateView.as_view(), name='posts-list-create'),
