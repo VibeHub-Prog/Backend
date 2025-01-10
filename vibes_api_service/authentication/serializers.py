@@ -18,7 +18,6 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True, max_length=255)
 
     def validate(self, data):
-        # Custom validation to authenticate the user
         username = data.get('username')
         password = data.get('password')
 
