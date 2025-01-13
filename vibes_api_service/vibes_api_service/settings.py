@@ -177,4 +177,38 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.profile',
 ]
 
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+
+
 EMAIL_TEMPLATE = "carekojo_email_template.html"
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'  # Outlook's SMTP server
+EMAIL_PORT = 587  # Port for TLS
+EMAIL_USE_TLS = True  # Enable TLS
+# EMAIL_USE_SSL = False  # Ensure this is False when using TLS
+EMAIL_HOST_USER = 'vibe_api@outlook.com'  # Your Outlook email
+EMAIL_HOST_PASSWORD = 'api_service'  # The correct password for your Outlook account
+DEFAULT_FROM_EMAIL = 'vibe_api@outlook.com'  # The sender's email address
+
+EMAIL_HELO = 'www.vibehub.social'  # Replace with your desired FQDN
