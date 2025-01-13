@@ -1,31 +1,37 @@
-from rest_framework import serializers
-from .models import Post, Community, Vibe, Bookmark
-
-class PostsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = '__all__'
+from rest_framework import serializers, viewsets
+from .models import Post, Like, Comment, Share
 
 class PostSerializer(serializers.ModelSerializer):
+    total_likes = serializers.IntegerField(read_only=True)
+    total_comments = serializers.IntegerField(read_only=True)
+    total_shares = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['id', 'author', 'content', 'media', 'created_at', 'updated_at', 'total_likes', 'total_comments', 'total_shares']
 
 
-from rest_framework import serializers, viewsets
 
-class CommunitySerializer(serializers.ModelSerializer):
+
+class LikeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Community
-        fields = '__all__'
+        model = Like
+        fields = ['id', 'user', 'post', 'created_at']
 
-class VibeSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
+    replies = serializers.SerializerMethodField()  # For nested replies
+
     class Meta:
-        model = Vibe
-        fields = ('id', 'user', 'post')
+        model = Comment
+        fields = ['id', 'user', 'post', 'content', 'parent', 'replies', 'created_at', 'updated_at']
+
+    def get_replies(self, obj):
+        if obj.replies.exists():
+            return CommentSerializer(obj.replies.all(), many=True).data
+        return []
 
 
-class BookmarkSerializer(serializers.ModelSerializer):
+class ShareSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Bookmark
-        fields = ('id', 'user', 'post')
+        model = Share
+        fields = ['id', 'user', 'post', 'created_at']
