@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework.authtoken',
     'django_rest_passwordreset',
+    'drf_spectacular',
+    'channels',
     'authentication',
     'core',
-    'drf_spectacular',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "vibes_api_service.wsgi.application"
+ASGI_APPLICATION = 'your_project_name.asgi.application'
+
+# Channel Layers (for WebSocket communication)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 
 # Database

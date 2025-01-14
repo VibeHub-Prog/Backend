@@ -1,5 +1,5 @@
 from rest_framework.permissions import AllowAny
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
-from authentication.serializers import UserSerializer, UserLoginSerializer
+from authentication.serializers import UserSerializer, UserLoginSerializer, UserRegistrationSerializer
 from rest_framework.permissions import IsAuthenticated
 
 from drf_spectacular.utils import extend_schema
@@ -57,6 +57,14 @@ def google_oauth(request):
         }
     })
 
+class UserRegistrationView(generics.CreateAPIView):
+    serializer_class = UserRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UserViewSet(viewsets.ModelViewSet):
     """

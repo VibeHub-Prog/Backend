@@ -8,10 +8,11 @@ from django.db import models
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-    media = models.ImageField(upload_to='post_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
+    video = models.FileField(upload_to='post_videos/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
     def total_likes(self):
         return self.likes.count()
 
