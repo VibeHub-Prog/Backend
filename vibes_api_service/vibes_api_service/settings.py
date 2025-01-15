@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,7 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "vibes_api_service.wsgi.application"
-ASGI_APPLICATION = 'your_project_name.asgi.application'
+ASGI_APPLICATION = 'vibes_api_service.asgi.application'
 
 # Channel Layers (for WebSocket communication)
 CHANNEL_LAYERS = {
@@ -212,13 +214,22 @@ EMAIL_TEMPLATE = "carekojo_email_template.html"
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-mail.outlook.com'  # Outlook's SMTP server
-EMAIL_PORT = 587  # Port for TLS
-EMAIL_USE_TLS = True  # Enable TLS
-# EMAIL_USE_SSL = False  # Ensure this is False when using TLS
-EMAIL_HOST_USER = 'vibe_api@outlook.com'  # Your Outlook email
-EMAIL_HOST_PASSWORD = 'api_service'  # The correct password for your Outlook account
-DEFAULT_FROM_EMAIL = 'vibe_api@outlook.com'  # The sender's email address
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')  # Default to Gmail
+# EMAIL_PORT = os.getenv('EMAIL_PORT', 587)
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Email address
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # App password
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
-EMAIL_HELO = 'www.vibehub.social'  # Replace with your desired FQDN
+
+
+# Load environment variables from .env file (decouple does this automatically)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER)
+
